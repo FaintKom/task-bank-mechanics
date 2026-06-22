@@ -12,6 +12,15 @@ const REGISTRY = {
 const STATUS = { approved: ["Утверждено", "b-approved"], done: ["Готово", "b-done"], issues: ["Есть замечания", "b-issues"], mockup: ["Макет", "b-mockup"] };
 const FIT = { ok: ["хорошо", "f-ok", "d-ok"], warn: ["с нюансами", "f-warn", "d-warn"], bad: ["риск", "f-bad", "d-bad"] };
 const TAGMAP = { cfg: ["t-cfg", "Контент, конфиг"], touch: ["t-touch", "Взаимодействие"], grade: ["t-grade", "Грейдинг"], view: ["t-view", "Отображение"] };
+const DSTATUS = {
+  resolved: ["Решено макетом", "#0EB16A", "#E6F7F0"],
+  fixed: ["Исправлено", "#0A7D52", "#E2F4EC"],
+  partial: ["Частично", "#B26A00", "#FBF1DE"],
+  open: ["Открыто", "#E5484D", "#FBEAEA"],
+  confirmed: ["Подтверждено макетом", "#C2410C", "#FBEDE3"],
+  unverifiable: ["Не проверить на макете", "#5B6470", "#EEF0F2"],
+  inaccuracy: ["Поправить наш текст", "#5800E5", "#EEE9FB"],
+};
 
 const M = window.MECH_DATA;
 
@@ -44,6 +53,30 @@ function EdgeList({ items }) {
   );
 }
 
+function DStatusChip({ st }) {
+  const d = DSTATUS[st] || DSTATUS.open;
+  return <span style={{ display: "inline-block", fontSize: "11px", fontWeight: 700, lineHeight: "1.5", padding: "2px 9px", borderRadius: "999px", color: d[1], background: d[2], whiteSpace: "nowrap" }}>{d[0]}</span>;
+}
+function DesignStatusBlock({ ds }) {
+  return (
+    <div className="block">
+      <div className="bt review">Статус по макету · {ds.src} · {ds.date}</div>
+      <p style={{ margin: "0 0 10px", fontSize: "14px" }}>{ds.summary}</p>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+        {ds.items.map((it, i) => (
+          <li key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start", padding: "8px 0", borderTop: i ? "1px solid #ECECF0" : "none" }}>
+            <span style={{ flex: "0 0 auto", marginTop: "2px" }}><DStatusChip st={it.st} /></span>
+            <span>
+              <span dangerouslySetInnerHTML={{ __html: it.t }} />
+              {it.n && <span style={{ display: "block", color: "#6B7280", fontSize: "13px", marginTop: "3px" }} dangerouslySetInnerHTML={{ __html: it.n }} />}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function MechRow({ m, i }) {
   const st = STATUS[m.status]; const Demo = REGISTRY[m.id];
   return (
@@ -70,6 +103,7 @@ function MechRow({ m, i }) {
             </ul>
           </div>
         )}
+        {m.designStatus && <DesignStatusBlock ds={m.designStatus} />}
       </div>
       <div className="mcol-demo">
         <div className="demo-wrap">

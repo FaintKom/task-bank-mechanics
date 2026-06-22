@@ -8,6 +8,7 @@
   :root{
     --purple:#5800E5; --purple-deep:#3900AD; --fog:#B0AAB6; --light:#F2F2F3; --green:#0EB16A;
     --ink:#101828; --ink-soft:#475067; --line:#E6E4EA; --warn:#B26A00; --bad:#C0334E;
+    --ok:#1B8E62; --ok-bg:#E4F6EE; --warn-bg:#FBF0DC; --bad-bg:#FBE6EB; --info-bg:#EEE9FB;
   }
   *{ box-sizing:border-box; }
   body{ margin:0; background:#FAFAFB; color:var(--ink); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.6; letter-spacing:-0.003em; }
@@ -33,6 +34,34 @@
   .count{ font-size:13px; font-weight:600; color:var(--ink-soft); }
   .open{ font-size:13px; font-weight:700; color:var(--purple); display:inline-flex; align-items:center; gap:6px; }
 
+  h2{ font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--purple); margin:60px 0 6px; }
+  .h2sub{ font-size:26px; font-weight:700; letter-spacing:-0.03em; margin:0 0 22px; }
+  .muted{ color:var(--ink-soft); max-width:74ch; }
+  .note{ border-radius:12px; padding:18px 22px; margin:22px 0; font-size:14.5px; }
+  .note.info{ background:var(--info-bg); } .note.warn{ background:var(--warn-bg); }
+  .note .nt{ font-weight:700; display:block; margin-bottom:4px; }
+  .note p{ margin:0; max-width:78ch; }
+  .finding{ border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); padding:24px 26px; margin:18px 0; }
+  .finding .tag{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 9px; border-radius:6px; margin-bottom:10px; background:var(--bad-bg); color:var(--bad); }
+  .finding p{ font-size:14.5px; color:var(--ink); margin:0 0 12px; }
+  .finding .fix{ padding:13px 16px; border-radius:10px; background:var(--ok-bg); font-size:13.5px; }
+  .finding .fix b{ color:var(--ok); }
+  .finding .ex{ font-size:13px; color:var(--ink-soft); margin:0; }
+  .finding .ex b{ color:var(--ink); font-weight:600; }
+  table#matrix{ border-collapse:collapse; width:100%; font-size:13.5px; margin:8px 0 0; }
+  #matrix thead th{ text-align:left; font-weight:700; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 12px 10px; border-bottom:2px solid var(--ink); vertical-align:bottom; }
+  #matrix tbody td{ padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  #matrix tbody tr:hover{ background:#F6F5FA; }
+  .mname{ font-weight:600; }
+  .mname a{ color:inherit; text-decoration:none; }
+  .mname a:hover{ color:var(--purple); }
+  .v{ font-weight:700; white-space:nowrap; }
+  .v-ok{ color:var(--ok); } .v-warn{ color:var(--warn); } .v-bad{ color:var(--bad); }
+  .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; vertical-align:middle; margin-right:7px; }
+  .d-ok{ background:var(--ok); } .d-warn{ background:var(--warn); } .d-bad{ background:var(--bad); }
+  .legend{ display:flex; flex-wrap:wrap; gap:14px; margin:10px 0 18px; font-size:12px; color:var(--ink-soft); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+
   footer{ margin-top:56px; font-size:13px; color:var(--ink-soft); }
   @media (max-width:640px){ .wrap{ padding:40px 20px 70px; } h1{ font-size:34px; } }
 </style>
@@ -51,9 +80,39 @@
 
   <div class="grid" id="grid"></div>
 
-  <footer>Все 20 механик разобраны. Каждая страница: рабочий пример и edge-кейсы на симуляторе планшета, с пометкой «что доработать».</footer>
+  <section>
+    <h2>Общие выводы</h2>
+    <div class="h2sub">Сквозные находки по всем 20 механикам</div>
+    <p class="muted">Хорошая обучающая механика делает четыре вещи: (1) действие руками строит понятие; (2) фидбек объясняет ошибку, не только отмечает «неверно»; (3) виден процесс, не только итоговый ответ; (4) есть опоры и право на вторую попытку. По этим осям собраны находки ниже, общие для всех механик; вердикт «учит или судит» по каждой механике стоит в сводной матрице.</p>
+    <div class="note info">
+      <span class="nt">Модель фидбека, одна на все механики</span>
+      <p>До «Проверить» сигнала о правильности нет. После: верное зеленеет, неверное краснеет. В коде к цвету добавлены значки <span class="mid">Check</span> и <span class="mid">X</span>, в макете различение идёт только цветом, без значков. Правильный ответ раскрывается (гало, линия или луч), у наборных появляется «нужно N». Часть значений (часы, дробь-счётчик) видна только в Graded. Ввод идёт через нативные поля, выбор через Radix Select.</p>
+    </div>
+    <div class="note warn">
+      <span class="nt">Возраст: данные только по 4 классу, 1 триместр</span>
+      <p>Методология охватывает 4 класс, т1: числа до 1 000 000, разряды и классы, округление, столбик, порядок действий, уравнения, периметр и площадь, делимость до 100. Часы, монеты, весы это младшие классы и в 4 классе работают как повторение.</p>
+    </div>
+    <div id="findings"></div>
+  </section>
+
+  <section>
+    <h2>Сводная матрица</h2>
+    <div class="h2sub">Все 20 механик: что формируют и учат ли</div>
+    <div class="legend">
+      <span><i class="dot d-ok"></i>интерактив реально учит понятию</span>
+      <span><i class="dot d-warn"></i>учит частично или есть пед-риск</span>
+      <span><i class="dot d-bad"></i>скорее проверяет ответ, чем учит</span>
+    </div>
+    <table id="matrix">
+      <thead><tr><th>Механика</th><th>Что формирует</th><th>Учит-судит</th><th>Главный обучающий риск</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <footer>Все 20 механик разобраны. Каждая страница: рабочий пример, edge-кейсы на симуляторе планшета и разбор UX с пометкой «что доработать».</footer>
 </div>
 
+<script src="mechx/data.js"></script>
 <script>
 const MECHS = [
   { n:"01", id:"choice", name:"Выбор ответа", file:"Механика 01 - Выбор ответа.html", edges:6, svg:'<rect x="10" y="12" width="36" height="9" rx="3"/><rect x="10" y="24" width="36" height="9" rx="3" opacity="0.85"/><rect x="10" y="36" width="22" height="9" rx="3" opacity="0.55"/>' },
@@ -91,6 +150,54 @@ MECHS.forEach((m) => {
     `<div class="foot"><span class="count">${m.edges} ${plural(m.edges)}</span><span class="open">Открыть →</span></div>`;
   grid.appendChild(a);
 });
+
+const FINDINGS = [
+  { tag:"Фидбек судит, а не учит", text:"Грейдинг везде бинарный: «верно или неверно», без объяснения <b>почему</b> и без наводящей подсказки. Ребёнок видит коралловую подсветку, но не понимает причину ошибки и что делать иначе, а именно объяснение и второй заход с опорой формируют навык.",
+    fix:"Давать обучающий фидбек: подсветка типа ошибки + короткая подсказка («проверь разряд десятков», «посчитай от нуля»), вторая попытка после подсказки, и только потом показ ответа.",
+    ex:"Везде. Острее всего там, где ответ многошаговый: column-add, text-with-slots, number-grid." },
+  { tag:"Проверяется ответ, а не процесс", text:"Механики сверяют конечный результат, а само рассуждение не видно и не оценивается. Ребёнок может получить верный ответ угадыванием или неверный даже при правильном ходе мысли, и система этого не различает.",
+    fix:"Фиксировать и подсвечивать шаги: перенос в столбике, порядок действий, промежуточные значения. Оценивать процесс, а не только итог.",
+    ex:"<b>column-add</b> сверяет итоговое число, а перенос «1 в уме» нигде не живёт. <b>text-with-slots</b> многошаговую цепочку льёт в один ответ." },
+  { tag:"Нет прикидки и «почти верно»", text:"Точное-или-неверно убивает оценку величины, а это ключевой математический навык. Промах «на один» и грубая ошибка караются одинаково, а прикидка (примерно где число) не тренируется вовсе.",
+    fix:"Там, где уместно, вводить допуск и состояние «почти» (соседнее деление), задания на оценку «примерно сколько», разбор близости к ответу.",
+    ex:"<b>number-line</b>, <b>ruler</b>, <b>angle</b>: только точное попадание. <b>slider-control</b> умеет допуск, но по умолчанию он 0." },
+  { tag:"Концептуальные искажения", text:"Несколько механик противоречат самому понятию, которое преподают, и так закрепляют неверную модель.",
+    fix:"Привести модель в соответствие понятию: принимать коммутативность; отражать непрерывное движение часовой стрелки; подсвечивать сектор угла.",
+    ex:"<b>array-grid</b>: здесь 3×4 не то же самое, что 4×3, и это ломает переместительное свойство. <b>clock</b>: часовая стрелка дискретна (в 12:55 она не «почти на 1»), и это искажает чтение аналоговых часов." },
+  { tag:"Смысл прячется до проверки", text:"Часть механик показывает число или счётчик только в режиме Graded. Ребёнок действует «вслепую» и не связывает своё действие с числом по ходу, а именно эта живая связь действия с величиной и обучает.",
+    fix:"Показывать живое числовое отражение действия сразу: текущее время, дробь-счётчик, выбранное значение, сумму.",
+    ex:"<b>clock</b> и <b>fraction-shade</b>: табло или счётчик только после «Проверить». (В разборе для них уже показан режим «как надо».)" },
+  { tag:"Ответ угадывается, а не выводится", text:"Где вариантов мало или формат подсказывает, ребёнок подбирает ответ, не рассуждая. Механика не отделяет понимание от везения.",
+    fix:"Просить обоснование или второй связанный ответ, увеличивать пространство ответов, давать задания на объяснение «почему», а не только «что».",
+    ex:"<b>choice</b> с 2–3 вариантами; <b>match-columns</b>, где остаток связей выводится методом исключения." },
+  { tag:"Тап-цели ниже норматива 44px", text:"Внутренний норматив проекта требует тап-цели не меньше 44px. По коду ниже: часы (≈32 и 28px), угол (≈28px), координатная сетка (≈34px). Для моторики девятилетнего это источник промахов, а промах сразу стоит всего задания.",
+    fix:"Поднять тап-цели до 44px и выше, развести близко стоящие цели, увеличить шаг попадания на плотных сетках.",
+    ex:"<b>clock</b>, <b>angle</b>, <b>coordinate-grid</b>." },
+];
+const findingsRoot = document.getElementById("findings");
+FINDINGS.forEach((f) => {
+  const el = document.createElement("div");
+  el.className = "finding";
+  el.innerHTML = `<span class="tag">${f.tag}</span><p>${f.text}</p><p class="ex"><b>Где:</b> ${f.ex}</p><div class="fix"><b>Как чинить:</b> ${f.fix}</div>`;
+  findingsRoot.appendChild(el);
+});
+
+const VERDICT = { ok: ["учит", "v-ok", "d-ok"], warn: ["частично", "v-warn", "d-warn"], bad: ["судит", "v-bad", "d-bad"] };
+const PED = window.MECH_PEDAGOGY || {};
+const mtb = document.querySelector("#matrix tbody");
+MECHS.forEach((m) => {
+  const p = PED[m.id];
+  if (!p) return;
+  const v = VERDICT[p.v] || VERDICT.warn;
+  const tr = document.createElement("tr");
+  tr.innerHTML =
+    `<td class="mname"><a href="${m.file}">${m.name}</a><br><span class="mid">${m.id}</span></td>`+
+    `<td>${p.skill}</td>`+
+    `<td><span class="v ${v[1]}"><i class="dot ${v[2]}"></i>${v[0]}</span></td>`+
+    `<td>${p.risk}</td>`;
+  mtb.appendChild(tr);
+});
 </script>
+<script src="mechx/nav.js"></script>
 </body>
 </html>
