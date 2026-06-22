@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Механики Task Bank · обзор edge-кейсов</title>
+<style>
+  :root{
+    --purple:#5800E5; --purple-deep:#3900AD; --fog:#B0AAB6; --light:#F2F2F3; --green:#0EB16A;
+    --ink:#101828; --ink-soft:#475067; --line:#E6E4EA; --warn:#B26A00; --bad:#C0334E;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#FAFAFB; color:var(--ink); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.6; letter-spacing:-0.003em; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:64px 40px 100px; }
+  .mid{ font-family:"SFMono-Regular",Consolas,monospace; font-size:12px; color:var(--fog); }
+  .cover{ border-bottom:2px solid var(--ink); padding-bottom:34px; margin-bottom:40px; }
+  .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--purple); margin:0 0 16px; }
+  h1{ font-size:46px; line-height:1.04; letter-spacing:-0.04em; font-weight:700; margin:0 0 18px; max-width:20ch; }
+  .lede{ font-size:18px; line-height:1.55; color:var(--ink-soft); max-width:66ch; margin:0; }
+  .meta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:24px; }
+  .pill{ font-size:12.5px; font-weight:600; padding:6px 12px; border-radius:999px; background:var(--light); color:var(--ink-soft); }
+  .pill b{ color:var(--ink); }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:20px; }
+  .card{ display:block; text-decoration:none; color:inherit; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); padding:22px 22px 20px; transition:transform .18s cubic-bezier(.22,.61,.36,1), box-shadow .18s, border-color .18s; }
+  .card:hover{ transform:translateY(-4px); box-shadow:0 16px 36px rgba(16,24,40,.12); border-color:var(--purple); }
+  .card-top{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .thumb{ width:56px; height:56px; border-radius:14px; background:#F4F1FE; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .num{ font-size:13px; font-weight:700; color:var(--purple); font-variant-numeric:tabular-nums; }
+  .card h3{ font-size:19px; font-weight:700; letter-spacing:-0.02em; margin:0 0 4px; }
+  .card .id{ font-family:"SFMono-Regular",Consolas,monospace; font-size:12px; color:var(--fog); }
+  .card .foot{ display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
+  .count{ font-size:13px; font-weight:600; color:var(--ink-soft); }
+  .open{ font-size:13px; font-weight:700; color:var(--purple); display:inline-flex; align-items:center; gap:6px; }
+
+  footer{ margin-top:56px; font-size:13px; color:var(--ink-soft); }
+  @media (max-width:640px){ .wrap{ padding:40px 20px 70px; } h1{ font-size:34px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="cover">
+    <p class="eyebrow">Task Bank · разбор механик</p>
+    <h1>Механики: edge-кейсы и что доработать</h1>
+    <p class="lede">Покомпонентный разбор интерактивных механик по реальному коду репозитория. Каждый граничный случай это живая демонстрация на симуляторе планшета (Lenovo Tab K11, 1280×800) с предложением, что улучшить. Нажмите карточку, чтобы открыть полную страницу.</p>
+    <div class="meta">
+      <span class="pill"><b>20</b> механик · все разобраны</span>
+      <span class="pill">Устройство: планшет, touch</span>
+    </div>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>Все 20 механик разобраны. Каждая страница: рабочий пример и edge-кейсы на симуляторе планшета, с пометкой «что доработать».</footer>
+</div>
+
+<script>
+const MECHS = [
+  { n:"01", id:"choice", name:"Выбор ответа", file:"Механика 01 - Выбор ответа.html", edges:6, svg:'<rect x="10" y="12" width="36" height="9" rx="3"/><rect x="10" y="24" width="36" height="9" rx="3" opacity="0.85"/><rect x="10" y="36" width="22" height="9" rx="3" opacity="0.55"/>' },
+  { n:"02", id:"text-with-slots", name:"Текст с пропусками", file:"Механика 02 - Текст с пропусками.html", edges:5, svg:'<rect x="8" y="18" width="14" height="6" rx="2"/><rect x="26" y="14" width="16" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><rect x="8" y="32" width="34" height="6" rx="2" opacity="0.6"/>' },
+  { n:"03", id:"number-line", name:"Числовая прямая", file:"Механика 03 - Числовая прямая.html", edges:4, svg:'<line x1="8" y1="34" x2="48" y2="34" stroke="currentColor" stroke-width="3"/><line x1="14" y1="29" x2="14" y2="39" stroke="currentColor" stroke-width="3"/><line x1="28" y1="29" x2="28" y2="39" stroke="currentColor" stroke-width="3"/><line x1="42" y1="29" x2="42" y2="39" stroke="currentColor" stroke-width="3"/><circle cx="28" cy="34" r="6"/>' },
+  { n:"04", id:"number-grid", name:"Числовая таблица", file:"Механика 04 - Числовая таблица.html", edges:2, svg:'<g stroke="currentColor" stroke-width="2.5" fill="none"><rect x="10" y="10" width="36" height="36" rx="3"/><line x1="22" y1="10" x2="22" y2="46"/><line x1="34" y1="10" x2="34" y2="46"/><line x1="10" y1="22" x2="46" y2="22"/><line x1="10" y1="34" x2="46" y2="34"/></g>' },
+  { n:"05", id:"table-grid", name:"Заполни таблицу", file:"Механика 05 - Заполни таблицу.html", edges:3, svg:'<g stroke="currentColor" stroke-width="2.5" fill="none"><rect x="9" y="14" width="38" height="28" rx="3"/><line x1="9" y1="24" x2="47" y2="24"/><line x1="28" y1="14" x2="28" y2="42"/></g><rect x="31" y="27" width="13" height="12" rx="2" fill="currentColor" opacity="0.85"/>' },
+  { n:"06", id:"match-columns", name:"Сопоставление", file:"Механика 06 - Сопоставление.html", edges:3, svg:'<rect x="8" y="13" width="14" height="10" rx="3"/><rect x="8" y="32" width="14" height="10" rx="3"/><rect x="34" y="13" width="14" height="10" rx="3" opacity="0.7"/><rect x="34" y="32" width="14" height="10" rx="3" opacity="0.7"/><path d="M22 18 L34 37 M22 37 L34 18" stroke="currentColor" stroke-width="2.5" fill="none"/>' },
+  { n:"07", id:"column-add", name:"Сложение в столбик", file:"Механика 07 - Сложение в столбик.html", edges:3, svg:'<text x="28" y="22" text-anchor="middle" font-size="15" font-weight="700" font-family="Georgia">27</text><text x="12" y="36" font-size="15" font-weight="700" font-family="Georgia">+</text><text x="30" y="36" text-anchor="middle" font-size="15" font-weight="700" font-family="Georgia">45</text><line x1="14" y1="40" x2="44" y2="40" stroke="currentColor" stroke-width="2.5"/>' },
+  { n:"08", id:"drag-drop-set", name:"Перетаскивание по группам", file:"Механика 08 - Перетаскивание по группам.html", edges:3, svg:'<rect x="9" y="12" width="16" height="13" rx="3"/><rect x="30" y="30" width="18" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 3"/><path d="M24 20 L36 33" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M36 33 l-6 0 m6 0 l0 -6" stroke="currentColor" stroke-width="2.5" fill="none"/>' },
+  { n:"09", id:"sequence-track", name:"Упорядочивание", file:"Механика 09 - Упорядочивание.html", edges:3, svg:'<rect x="7" y="22" width="12" height="12" rx="3"/><rect x="22" y="22" width="12" height="12" rx="3" opacity="0.8"/><rect x="37" y="22" width="12" height="12" rx="3" opacity="0.6"/><path d="M13 16 a8 6 0 0 1 15 0" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M28 16 l0 -4 m0 4 l4 0" stroke="currentColor" stroke-width="2.5" fill="none"/>' },
+  { n:"10", id:"slider-control", name:"Ползунок", file:"Механика 10 - Ползунок.html", edges:3, svg:'<line x1="8" y1="28" x2="48" y2="28" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="28" r="8" fill="currentColor"/>' },
+  { n:"11", id:"array-grid", name:"Прямоугольный массив", file:"Механика 11 - Прямоугольный массив.html", edges:3, svg:'<g stroke="currentColor" stroke-width="2" fill="none"><rect x="12" y="12" width="32" height="24" rx="2"/><line x1="23" y1="12" x2="23" y2="36"/><line x1="33" y1="12" x2="33" y2="36"/><line x1="12" y1="24" x2="44" y2="24"/></g><rect x="12" y="12" width="21" height="12" fill="currentColor" opacity="0.3"/>' },
+  { n:"12", id:"base10-blocks", name:"Блоки разрядов", file:"Механика 12 - Блоки разрядов.html", edges:3, svg:'<rect x="8" y="12" width="14" height="14" rx="2"/><rect x="27" y="12" width="5" height="14" rx="1" opacity="0.85"/><rect x="34" y="12" width="5" height="14" rx="1" opacity="0.85"/><rect x="30" y="34" width="6" height="6" rx="1" opacity="0.6"/><rect x="39" y="34" width="6" height="6" rx="1" opacity="0.6"/>' },
+  { n:"13", id:"fraction-shade", name:"Закрась части", file:"Механика 13 - Закрась части.html", edges:3, svg:'<circle cx="28" cy="28" r="18" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M28 28 L28 10 A18 18 0 0 1 43 37 Z" fill="currentColor" opacity="0.5"/><line x1="28" y1="28" x2="28" y2="10" stroke="currentColor" stroke-width="2"/><line x1="28" y1="28" x2="43" y2="37" stroke="currentColor" stroke-width="2"/>' },
+  { n:"14", id:"clock", name:"Часы", file:"Механика 14 - Часы.html", edges:4, svg:'<circle cx="28" cy="28" r="18" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="28" y1="28" x2="28" y2="16" stroke="currentColor" stroke-width="2.5"/><line x1="28" y1="28" x2="37" y2="31" stroke="currentColor" stroke-width="2.5"/>' },
+  { n:"15", id:"coins", name:"Монеты", file:"Механика 15 - Монеты.html", edges:3, svg:'<circle cx="22" cy="28" r="13" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="36" cy="28" r="13" fill="currentColor" opacity="0.25"/><circle cx="36" cy="28" r="13" fill="none" stroke="currentColor" stroke-width="2.5"/>' },
+  { n:"16", id:"balance-scale", name:"Весы и гири", file:"Механика 16 - Весы и гири.html", edges:3, svg:'<line x1="28" y1="14" x2="28" y2="42" stroke="currentColor" stroke-width="2.5"/><line x1="13" y1="20" x2="43" y2="20" stroke="currentColor" stroke-width="2.5"/><path d="M8 20 a5 4 0 0 0 10 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M38 20 a5 4 0 0 0 10 0" fill="none" stroke="currentColor" stroke-width="2"/><rect x="22" y="42" width="12" height="4" rx="1" fill="currentColor"/>' },
+  { n:"17", id:"ruler", name:"Линейка", file:"Механика 17 - Линейка.html", edges:3, svg:'<rect x="8" y="22" width="40" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="16" y1="22" x2="16" y2="29" stroke="currentColor" stroke-width="2"/><line x1="24" y1="22" x2="24" y2="29" stroke="currentColor" stroke-width="2"/><line x1="32" y1="22" x2="32" y2="29" stroke="currentColor" stroke-width="2"/><line x1="40" y1="22" x2="40" y2="29" stroke="currentColor" stroke-width="2"/>' },
+  { n:"18", id:"angle", name:"Угол", file:"Механика 18 - Угол.html", edges:3, svg:'<path d="M12 40 L44 40" stroke="currentColor" stroke-width="2.5"/><path d="M12 40 L40 20" stroke="currentColor" stroke-width="2.5"/><path d="M12 40 m18 0 a18 18 0 0 0 -11 -13" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>' },
+  { n:"19", id:"bar-chart", name:"Построй диаграмму", file:"Механика 19 - Построй диаграмму.html", edges:3, svg:'<rect x="11" y="30" width="9" height="14" fill="currentColor" opacity="0.5"/><rect x="24" y="20" width="9" height="24" fill="currentColor" opacity="0.75"/><rect x="37" y="26" width="9" height="18" fill="currentColor"/>' },
+  { n:"20", id:"coordinate-grid", name:"Координатная сетка", file:"Механика 20 - Координатная сетка.html", edges:3, svg:'<g stroke="currentColor" stroke-width="1.5" opacity="0.5"><line x1="14" y1="12" x2="14" y2="44"/><line x1="26" y1="12" x2="26" y2="44"/><line x1="38" y1="12" x2="38" y2="44"/><line x1="12" y1="20" x2="46" y2="20"/><line x1="12" y1="32" x2="46" y2="32"/></g><line x1="14" y1="12" x2="14" y2="44" stroke="currentColor" stroke-width="2.5"/><line x1="14" y1="44" x2="46" y2="44" stroke="currentColor" stroke-width="2.5"/><circle cx="38" cy="20" r="5" fill="currentColor"/>' },
+];
+const grid = document.getElementById("grid");
+const plural = (n) => { const a = n % 10, b = n % 100; if (a === 1 && b !== 11) return "комментарий"; if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return "комментария"; return "комментариев"; };
+MECHS.forEach((m) => {
+  const a = document.createElement("a");
+  a.className = "card"; a.href = m.file;
+  a.innerHTML =
+    `<div class="card-top">`+
+      `<div class="thumb"><svg width="56" height="56" viewBox="0 0 56 56" fill="var(--purple)">${m.svg}</svg></div>`+
+      `<div><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="num">${m.n}</span></div>`+
+      `<h3>${m.name}</h3><span class="id">${m.id}</span></div>`+
+    `</div>`+
+    `<div class="foot"><span class="count">${m.edges} ${plural(m.edges)}</span><span class="open">Открыть →</span></div>`;
+  grid.appendChild(a);
+});
+</script>
+</body>
+</html>

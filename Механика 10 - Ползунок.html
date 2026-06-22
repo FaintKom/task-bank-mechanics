@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge-кейсы механики «Ползунок» (slider-control)</title>
+<link rel="stylesheet" href="mechx/mech-theme.css">
+<style>
+  :root{
+    --purple:#5800E5; --purple-deep:#3900AD; --dark:#101828; --fog:#B0AAB6;
+    --light:#F2F2F3; --white:#fff; --lime:#D9FF00; --green:#0EB16A;
+    --ink:#101828; --ink-soft:#475067; --line:#E6E4EA;
+    --ok:#1B8E62; --warn:#B26A00; --bad:#C0334E;
+    --ok-bg:#E4F6EE; --warn-bg:#FBF0DC; --bad-bg:#FBE6EB; --info-bg:#EEE9FB;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#FAFAFB; color:var(--ink); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.6; letter-spacing:-0.003em; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:60px 40px 120px; }
+  a{ color:var(--purple); }
+  .cover{ border-bottom:2px solid var(--ink); padding-bottom:34px; margin-bottom:14px; }
+  .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--purple); margin:0 0 16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .mid{ font-family:"SFMono-Regular",Consolas,monospace; font-size:12px; color:var(--fog); }
+  h1{ font-size:42px; line-height:1.05; letter-spacing:-0.04em; font-weight:700; margin:0 0 18px; max-width:20ch; }
+  .lede{ font-size:18px; line-height:1.55; color:var(--ink-soft); max-width:66ch; margin:0; }
+  h2{ font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--purple); margin:54px 0 6px; }
+  .h2sub{ font-size:26px; font-weight:700; letter-spacing:-0.03em; margin:0 0 22px; }
+  .intro p{ margin:0 0 14px; color:var(--ink-soft); max-width:70ch; }
+  .codebehind{ font-size:13px; background:#0F1322; color:#D7DCE8; border-radius:10px; padding:12px 16px; margin:6px 0 22px; font-family:"SFMono-Regular",Consolas,monospace; line-height:1.5; max-width:70ch; }
+  .codebehind b{ color:var(--lime); font-weight:600; }
+  .tablet-host{ max-width:1000px; margin:0 auto; }
+  .tablet-cap{ font-size:11.5px; color:var(--ink-soft); text-align:center; margin-bottom:10px; font-variant-numeric:tabular-nums; letter-spacing:.02em; }
+  .tablet-cap b{ color:var(--ink); font-weight:700; }
+  .tablet{ background:#15141f; border-radius:40px; box-shadow:0 18px 50px -12px rgba(0,0,0,.55); position:relative; transform-origin:top left; }
+  .tablet-cam{ position:absolute; top:50%; transform:translateY(-50%); left:9px; width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.16); }
+  .device-screen{ background:#fbf7f0; position:relative; }
+  .device-screen .mech{ background:transparent; padding:1.1rem; border-radius:0; }
+  .ec{ border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); margin:26px 0; padding:28px 30px 30px; }
+  .ec-tag{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 9px; border-radius:6px; margin-bottom:12px; }
+  .t-cfg{ background:var(--info-bg); color:var(--purple-deep); }
+  .t-touch{ background:#E2F0FB; color:#1A4877; }
+  .t-grade{ background:var(--bad-bg); color:var(--bad); }
+  .t-tab{ background:#EDE7FB; color:#5800E5; }
+  .t-age{ background:#FBF0DC; color:#B26A00; }
+  .ec h3{ font-size:22px; font-weight:700; letter-spacing:-0.02em; margin:0 0 16px; }
+  .ec-cols{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:26px; }
+  .ec-cols .problem{ margin:0; color:var(--ink); font-size:14.5px; }
+  .fix{ padding:14px 16px; border-radius:10px; background:var(--ok-bg); font-size:13.5px; align-self:start; }
+  .fix b{ color:var(--ok); }
+  .ec-controls{ display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+  .demo-note{ font-size:13px; color:var(--ink-soft); text-align:center; min-height:24px; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .seg{ display:inline-flex; background:var(--light); border-radius:10px; padding:3px; gap:2px; }
+  .seg button{ border:none; background:transparent; padding:7px 14px; border-radius:8px; font-weight:600; font-size:13px; color:var(--ink-soft); cursor:pointer; }
+  .seg button.on{ background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.1); }
+  footer{ margin-top:70px; padding-top:24px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-soft); }
+  .next{ margin-top:18px; padding:16px 20px; border-radius:12px; background:var(--info-bg); font-size:14px; }
+  @media (max-width:760px){ .wrap{ padding:40px 20px 80px; } .ec-cols{ grid-template-columns:1fr; } h1{ font-size:32px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <p class="eyebrow">Edge-кейсы механики · разбор по одной <span class="mid">slider-control</span></p>
+    <h1>Ползунок: что нужно доработать</h1>
+    <p class="lede">Ребёнок тянет ползунок к нужному значению на шкале (прикидка, округление, размещение числа). Каждый граничный случай это <b>живая демонстрация на симуляторе планшета</b> (Lenovo Tab K11, 1280×800) с тем, что стоит улучшить.</p>
+  </header>
+
+  <section>
+    <h2>Как работает</h2>
+    <div class="h2sub">Рабочий пример</div>
+    <div class="intro">
+      <p>Заданы минимум, максимум, шаг и целевое значение. Текущее значение показано крупно. Допуск <span class="mid">tolerance</span> задаёт, насколько близко нужно попасть (по умолчанию 0, то есть точно).</p>
+      <div class="codebehind"><b>score:</b> |value − target| ≤ tolerance (по умолчанию 0, то есть точное попадание). Шаг step по умолчанию 1.</div>
+      <div id="example"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Edge-кейсы</h2>
+    <div class="h2sub">3 проблемы · каждая на планшете</div>
+    <div id="cases"></div>
+  </section>
+
+  <section>
+    <h2>Рекомендации ревью</h2>
+    <div class="h2sub">Что улучшить: математика и детский UX</div>
+    <div id="review" data-mech="slider-control"></div>
+  </section>
+
+  <footer>
+    <p>Источник: компонент <span class="mid">apps/task-bank/components/mechanics/slider-control/slider-control.tsx</span>, логика <span class="mid">@math/core/mechanics/slider-control</span>, рамка планшета это порт <span class="mid">kit/DevicePreview.tsx</span>.</p>
+    <div class="next">Механика 10. Следующая: <span class="mid">array-grid</span>.</div>
+  </footer>
+
+</div>
+
+<script src="mechx/vendor/react.production.min.js"></script>
+<script src="mechx/vendor/react-dom.production.min.js"></script>
+<script src="mechx/data.js"></script>
+<script src="mechx/slider_control_edges.js"></script>
+<script src="mechx/review_block.js"></script>
+</body>
+</html>

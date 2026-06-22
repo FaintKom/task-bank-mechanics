@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX обучения математике: аудит механик</title>
+<style>
+  :root{
+    --purple:#5800E5; --purple-deep:#3900AD; --fog:#B0AAB6; --light:#F2F2F3; --green:#0EB16A;
+    --ink:#101828; --ink-soft:#475067; --line:#E6E4EA;
+    --ok:#1B8E62; --warn:#B26A00; --bad:#C0334E;
+    --ok-bg:#E4F6EE; --warn-bg:#FBF0DC; --bad-bg:#FBE6EB; --info-bg:#EEE9FB;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#FAFAFB; color:var(--ink); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.6; letter-spacing:-0.003em; }
+  .wrap{ max-width:1000px; margin:0 auto; padding:64px 40px 120px; }
+  .mid{ font-family:"SFMono-Regular",Consolas,monospace; font-size:12px; color:var(--fog); }
+  .cover{ border-bottom:2px solid var(--ink); padding-bottom:38px; margin-bottom:44px; }
+  .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--purple); margin:0 0 16px; }
+  h1{ font-size:44px; line-height:1.05; letter-spacing:-0.04em; font-weight:700; margin:0 0 20px; max-width:19ch; }
+  .lede{ font-size:18px; line-height:1.55; color:var(--ink-soft); max-width:64ch; margin:0; }
+  h2{ font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--purple); margin:60px 0 6px; }
+  .h2sub{ font-size:26px; font-weight:700; letter-spacing:-0.03em; margin:0 0 22px; }
+  h3{ font-size:18px; font-weight:700; letter-spacing:-0.02em; margin:0 0 6px; }
+  p{ margin:0 0 14px; } .muted{ color:var(--ink-soft); }
+
+  .note{ border-radius:12px; padding:18px 22px; margin:22px 0; font-size:14.5px; }
+  .note.info{ background:var(--info-bg); } .note.warn{ background:var(--warn-bg); }
+  .note .nt{ font-weight:700; display:block; margin-bottom:4px; }
+  .note p:last-child{ margin-bottom:0; }
+
+  .finding{ border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); padding:24px 26px; margin:18px 0; }
+  .finding .tag{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 9px; border-radius:6px; margin-bottom:10px; background:var(--bad-bg); color:var(--bad); }
+  .finding p{ font-size:14.5px; color:var(--ink); margin:0 0 12px; }
+  .finding .fix{ padding:13px 16px; border-radius:10px; background:var(--ok-bg); font-size:13.5px; }
+  .finding .fix b{ color:var(--ok); }
+  .finding .ex{ font-size:13px; color:var(--ink-soft); margin:0; }
+  .finding .ex b{ color:var(--ink); font-weight:600; }
+
+  table{ border-collapse:collapse; width:100%; font-size:13.5px; margin:8px 0 0; }
+  thead th{ text-align:left; font-weight:700; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 12px 10px; border-bottom:2px solid var(--ink); vertical-align:bottom; }
+  tbody td{ padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tbody tr:hover{ background:#F6F5FA; }
+  .mname{ font-weight:600; }
+  .v{ font-weight:700; white-space:nowrap; }
+  .v-ok{ color:var(--ok); } .v-warn{ color:var(--warn); } .v-bad{ color:var(--bad); }
+  .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; vertical-align:middle; margin-right:7px; }
+  .d-ok{ background:var(--ok); } .d-warn{ background:var(--warn); } .d-bad{ background:var(--bad); }
+  .legend{ display:flex; flex-wrap:wrap; gap:14px; margin:10px 0 0; font-size:12px; color:var(--ink-soft); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+
+  footer{ margin-top:70px; padding-top:24px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-soft); }
+  @media print{ body{ background:#fff; font-size:11pt; } .wrap{ padding:0; max-width:none; } .finding{ box-shadow:none; break-inside:avoid; } }
+  @media (max-width:640px){ .wrap{ padding:40px 20px 80px; } h1{ font-size:32px; } table{ font-size:12px; } thead th:nth-child(2), tbody td:nth-child(2){ display:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover">
+    <p class="eyebrow">Task Bank · педагогический разбор</p>
+    <h1>UX обучения математике: аудит механик</h1>
+    <p class="lede">Прошлый разбор смотрел на устройство, возраст и тип задания. Этот смотрит на главное: <b>помогает ли механика понять математику, а не просто получить ответ</b>. Ниже идут сквозные обучающие проблемы и вердикт по каждой из 20 механик: какой навык должна формировать механика и поддерживает ли это её интерактив.</p>
+  </header>
+
+  <section>
+    <h2>Рамка оценки</h2>
+    <div class="h2sub">Чем «учит» отличается от «проверяет»</div>
+    <p class="muted">Хорошая обучающая механика делает четыре вещи: (1) <b>интерактив воплощает понятие</b>: действие руками строит мысленную модель; (2) <b>фидбек объясняет</b>, а не только судит «верно или неверно»; (3) видно <b>процесс</b>, а не только конечный ответ; (4) есть <b>опоры и продуктивная ошибка</b>: подсказки, вторая попытка, частичный зачёт. По этим осям и смотрим.</p>
+  </section>
+
+  <section>
+    <h2>Сквозные проблемы</h2>
+    <div class="h2sub">Бьют по всем механикам сразу</div>
+    <div id="findings"></div>
+  </section>
+
+  <section>
+    <h2>Вердикт по механикам</h2>
+    <div class="h2sub">Что должна формировать · учит или судит</div>
+    <div class="legend">
+      <span><i class="dot d-ok"></i>интерактив реально учит понятию</span>
+      <span><i class="dot d-warn"></i>учит частично или есть пед-риск</span>
+      <span><i class="dot d-bad"></i>скорее проверяет ответ, чем учит</span>
+    </div>
+    <table id="verdict">
+      <thead><tr><th>Механика</th><th>Какой навык формирует</th><th>Оценка</th><th>Главный обучающий риск</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>Аналитический разбор поверх реального кода механик Task Bank. Выводы это гипотезы для обсуждения с методистами и проверки на детях; «оценка» отражает обучающую ценность интерактива, а не техническое качество реализации.</p>
+  </footer>
+
+</div>
+
+<script>
+const FINDINGS = [
+  { tag:"Фидбек судит, а не учит", text:"Грейдинг везде бинарный: «верно или неверно», без объяснения <b>почему</b> и без наводящей подсказки. Ребёнок видит коралловую подсветку, но не понимает причину ошибки и что делать иначе, а именно объяснение и второй заход с опорой формируют навык.",
+    fix:"Давать обучающий фидбек: подсветка типа ошибки + короткая подсказка («проверь разряд десятков», «посчитай от нуля»), вторая попытка после подсказки, и только потом показ ответа.",
+    ex:"Везде. Острее всего там, где ответ многошаговый: column-add, text-with-slots, number-grid." },
+  { tag:"Проверяется ответ, а не процесс", text:"Механики сверяют конечный результат, а само рассуждение не видно и не оценивается. Ребёнок может получить верный ответ угадыванием или неверный даже при правильном ходе мысли, и система этого не различает.",
+    fix:"Фиксировать и подсвечивать шаги: перенос в столбике, порядок действий, промежуточные значения. Оценивать процесс, а не только итог.",
+    ex:"<b>column-add</b> сверяет итоговое число, а перенос «1 в уме» нигде не живёт. <b>text-with-slots</b> многошаговую цепочку льёт в один ответ." },
+  { tag:"Нет прикидки и «почти верно»", text:"Точное-или-неверно убивает оценку величины, а это ключевой математический навык. Промах «на один» и грубая ошибка караются одинаково, а прикидка (примерно где число) не тренируется вовсе.",
+    fix:"Там, где уместно, вводить допуск и состояние «почти» (соседнее деление), задания на оценку «примерно сколько», разбор близости к ответу.",
+    ex:"<b>number-line</b>, <b>ruler</b>, <b>angle</b>: только точное попадание. <b>slider-control</b> умеет допуск, но по умолчанию он 0." },
+  { tag:"Концептуальные искажения", text:"Несколько механик противоречат самому понятию, которое преподают, и так закрепляют неверную модель.",
+    fix:"Привести модель в соответствие понятию: принимать коммутативность; отражать непрерывное движение часовой стрелки; подсвечивать сектор угла.",
+    ex:"<b>array-grid</b>: здесь 3×4 не то же самое, что 4×3, и это ломает переместительное свойство. <b>clock</b>: часовая стрелка дискретна (в 12:55 она не «почти на 1»), и это искажает чтение аналоговых часов." },
+  { tag:"Смысл прячется до проверки", text:"Часть механик показывает число или счётчик только в режиме Graded. Ребёнок действует «вслепую» и не связывает своё действие с числом по ходу, а именно эта живая связь действия с величиной и обучает.",
+    fix:"Показывать живое числовое отражение действия сразу: текущее время, дробь-счётчик, выбранное значение, сумму.",
+    ex:"<b>clock</b> и <b>fraction-shade</b>: табло или счётчик только после «Проверить». (В разборе для них уже показан режим «как надо».)" },
+  { tag:"Ответ угадывается, а не выводится", text:"Где вариантов мало или формат подсказывает, ребёнок подбирает ответ, не рассуждая. Механика не отделяет понимание от везения.",
+    fix:"Просить обоснование или второй связанный ответ, увеличивать пространство ответов, давать задания на объяснение «почему», а не только «что».",
+    ex:"<b>choice</b> с 2–3 вариантами; <b>match-columns</b>, где остаток связей выводится методом исключения." },
+];
+
+const V = { ok:["учит","v-ok","d-ok"], warn:["частично","v-warn","d-warn"], bad:["судит","v-bad","d-bad"] };
+const MECHS = [
+  { id:"choice", name:"Выбор ответа", skill:"Сравнение, распознавание, выбор верного утверждения", v:"warn", risk:"При малом числе вариантов ответ угадывается; нет «почему именно этот»." },
+  { id:"text-with-slots", name:"Текст с пропусками", skill:"Уравнения, разрядный состав, многошаговые вычисления", v:"warn", risk:"Цепочку рассуждения сводит к финальным числам; процесс не виден." },
+  { id:"number-line", name:"Числовая прямая", skill:"Положение и порядок чисел, расстояние, округление", v:"warn", risk:"Только точное попадание: прикидка и «примерно где» не тренируются." },
+  { id:"number-grid", name:"Числовая таблица", skill:"Кратные, делители, простые: структура чисел", v:"ok", risk:"Сильно учит видеть закономерность; но «всё-или-ничего» демотивирует на больших множествах." },
+  { id:"clock", name:"Часы", skill:"Чтение аналогового времени, связь часа и минут", v:"bad", risk:"Дискретная часовая стрелка искажает само чтение часов; смысл (табло) спрятан до проверки." },
+  { id:"bar-chart", name:"Построй диаграмму", skill:"Представление данных, высота = величина", v:"ok", risk:"Хорошо связывает число и высоту; портит только понижение через тап и target=0 без действия." },
+  { id:"ruler", name:"Линейка", skill:"Измерение длины, отсчёт от нуля", v:"warn", risk:"Всегда от нуля, поэтому ребёнок читает число, а не измеряет; ошибка «штрих или промежуток» не прорабатывается." },
+  { id:"angle", name:"Угол", skill:"Величина угла, измерение транспортиром", v:"warn", risk:"Только точное значение; вырожденные 0° и 180° нечитаемы; сектор не подсвечен, и величина не «чувствуется»." },
+  { id:"drag-drop-set", name:"Перетаскивание по группам", skill:"Классификация по признаку (чёт и нечёт, разряды)", v:"ok", risk:"Сильная модель сортировки; учит признаку. Риск: «не доделал» засчитывается как ошибка." },
+  { id:"sequence-track", name:"Упорядочивание", skill:"Порядок чисел по величине", v:"ok", risk:"Прямо тренирует сравнение и порядок; подсветка верных позиций уже подсказывает." },
+  { id:"match-columns", name:"Сопоставление", skill:"Связь выражения со значением, факта с результатом", v:"warn", risk:"Последние пары выводятся исключением, а не вычислением; many-to-one неочевиден." },
+  { id:"fraction-shade", name:"Закрась части", skill:"Доля как часть целого, смысл дроби", v:"ok", risk:"Наглядная модель доли; но счётчик-дробь спрятан до проверки, и связь частей с дробью ослаблена." },
+  { id:"column-add", name:"Сложение в столбик", skill:"Алгоритм столбика, перенос через разряд", v:"bad", risk:"Сверяет итог, а не процесс; переносу негде жить, и главный шаг алгоритма не поддержан." },
+  { id:"table-grid", name:"Заполни таблицу", skill:"Таблицы умножения и разрядов, функция вход-выход", v:"ok", risk:"Поячеечная проверка хорошо локализует; учит закономерности строки и столбца." },
+  { id:"array-grid", name:"Прямоугольный массив", skill:"Площадь как модель умножения, коммутативность", v:"bad", risk:"Здесь 3×4 не то же самое, что 4×3, и это прямо противоречит переместительному свойству, которое и изучают." },
+  { id:"base10-blocks", name:"Блоки разрядов", skill:"Разрядный состав, перегруппировка", v:"ok", risk:"Отличная модель разрядов (любой состав засчитан); потолок 999 не доводит до классов тысяч." },
+  { id:"balance-scale", name:"Весы и гири", skill:"Равенство как баланс, состав числа", v:"ok", risk:"Физика баланса передаёт смысл равенства, самопроверка встроена; малый наклон скрывает величину промаха." },
+  { id:"coins", name:"Монеты", skill:"Состав суммы, эквивалентность наборов", v:"ok", risk:"Учит набирать сумму разными способами; перебор не виден до проверки." },
+  { id:"slider-control", name:"Ползунок", skill:"Прикидка, округление, оценка величины", v:"ok", risk:"Единственная механика про оценку «на глаз», но без допуска превращается в точное попадание." },
+  { id:"coordinate-grid", name:"Координатная сетка", skill:"Координаты точки, порядок (x; y)", v:"warn", risk:"Порядок (x;y) легко путается, опоры нет; (0;0) сливается с осями." },
+];
+
+(function(){
+  const root = document.getElementById("findings");
+  FINDINGS.forEach((f)=>{
+    const el=document.createElement("div"); el.className="finding";
+    el.innerHTML = `<span class="tag">${f.tag}</span><p>${f.text}</p><p class="ex"><b>Где:</b> ${f.ex}</p><div class="fix"><b>Как чинить:</b> ${f.fix}</div>`;
+    root.appendChild(el);
+  });
+  const tb=document.querySelector("#verdict tbody");
+  MECHS.forEach((m)=>{ const v=V[m.v]; const tr=document.createElement("tr");
+    tr.innerHTML = `<td><span class="mname">${m.name}</span><br><span class="mid">${m.id}</span></td>`+
+      `<td>${m.skill}</td>`+
+      `<td><span class="v ${v[1]}"><i class="dot ${v[2]}"></i>${v[0]}</span></td>`+
+      `<td>${m.risk}</td>`;
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

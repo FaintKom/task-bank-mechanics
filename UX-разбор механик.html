@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX-разбор механик Task Bank · разбор и живые примеры</title>
+<link rel="stylesheet" href="mechx/mech-theme.css">
+<style>
+  :root{
+    --purple:#5800E5; --purple-deep:#3900AD; --dark:#101828; --fog:#B0AAB6;
+    --light:#F2F2F3; --white:#fff; --lime:#D9FF00; --rose:#FF2E92; --violet:#B299FF;
+    --green:#0EB16A;
+    --ink:#101828; --ink-soft:#475067; --line:#E6E4EA;
+    --ok:#1B8E62; --warn:#B26A00; --bad:#C0334E;
+    --ok-bg:#E4F6EE; --warn-bg:#FBF0DC; --bad-bg:#FBE6EB; --info-bg:#EEE9FB;
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:#FAFAFB; color:var(--ink); font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.6; letter-spacing:-0.003em; }
+  .wrap{ max-width:1320px; margin:0 auto; padding:64px 40px 120px; }
+  .narrow{ max-width:1000px; }
+  a{ color:var(--purple); }
+
+  .cover{ border-bottom:2px solid var(--ink); padding-bottom:40px; margin-bottom:48px; }
+  .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--purple); margin:0 0 18px; }
+  h1{ font-size:46px; line-height:1.04; letter-spacing:-0.04em; font-weight:700; margin:0 0 20px; max-width:20ch; }
+  .lede{ font-size:18px; line-height:1.55; color:var(--ink-soft); max-width:64ch; margin:0; }
+  .meta{ display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:28px; }
+  .meta .pill{ font-size:12.5px; font-weight:600; padding:6px 12px; border-radius:999px; background:var(--light); color:var(--ink-soft); }
+  .meta .pill b{ color:var(--ink); font-weight:700; }
+
+  h2{ font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--purple); margin:64px 0 6px; }
+  .h2sub{ font-size:26px; font-weight:700; letter-spacing:-0.03em; margin:0 0 24px; }
+  h3{ font-size:20px; font-weight:700; letter-spacing:-0.02em; margin:0; }
+  p{ margin:0 0 14px; } .muted{ color:var(--ink-soft); }
+
+  .note{ border-radius:12px; padding:18px 22px; margin:24px 0; font-size:14.5px; }
+  .note.info{ background:var(--info-bg); } .note.warn{ background:var(--warn-bg); } .note.bad{ background:var(--bad-bg); }
+  .note p:last-child{ margin-bottom:0; } .note .nt{ font-weight:700; display:block; margin-bottom:4px; }
+
+  table#matrix{ border-collapse:collapse; width:100%; font-size:13.5px; margin:8px 0 0; }
+  #matrix thead th{ text-align:left; font-weight:700; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 12px 10px; border-bottom:2px solid var(--ink); vertical-align:bottom; }
+  #matrix tbody td{ padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  #matrix tbody tr:hover{ background:#F6F5FA; }
+  .mname{ font-weight:600; white-space:nowrap; }
+  .mid{ font-family:"SFMono-Regular",Consolas,monospace; font-size:11.5px; color:var(--fog); }
+  .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; vertical-align:middle; margin-right:7px; }
+  .d-ok{ background:var(--ok); } .d-warn{ background:var(--warn); } .d-bad{ background:var(--bad); }
+  .fitword{ font-weight:600; } .f-ok{ color:var(--ok); } .f-warn{ color:var(--warn); } .f-bad{ color:var(--bad); }
+
+  /* two-column mechanic row */
+  .mrow{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,460px); gap:36px; align-items:start; padding:34px 0; border-bottom:1px solid var(--line); scroll-margin-top:20px; }
+  .mrow:first-of-type{ padding-top:8px; }
+  .mech-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px; }
+  .mech-head .mid{ font-size:13px; }
+  .num{ font-size:13px; font-weight:700; color:var(--purple); font-variant-numeric:tabular-nums; }
+  .badge{ font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:3px 9px; border-radius:999px; color:#fff; }
+  .b-approved{ background:var(--green); } .b-done{ background:var(--purple); } .b-issues{ background:var(--bad); } .b-mockup{ background:var(--warn); }
+  .gradeline{ display:flex; align-items:center; gap:10px; margin:14px 0 18px; padding:12px 16px; border-radius:10px; background:var(--light); font-size:13.5px; }
+  .gradeline .lbl{ font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+  .lead{ font-size:14.5px; color:var(--ink-soft); margin:0 0 18px; }
+  .codebehind{ font-size:13px; background:#0F1322; color:#D7DCE8; border-radius:10px; padding:12px 16px; margin:0 0 20px; font-family:"SFMono-Regular",Consolas,monospace; line-height:1.5; }
+  .codebehind b{ color:var(--lime); font-weight:600; }
+  .block{ margin:18px 0 0; }
+  .block > .bt{ font-size:11.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; margin:0 0 9px; display:flex; align-items:center; gap:8px; }
+  .bt.good{ color:var(--ok); } .bt.risk{ color:var(--bad); } .bt.edge{ color:var(--ink); } .bt.review{ color:var(--purple); }
+  .mcol-text ul{ margin:0; padding:0; list-style:none; }
+  .mcol-text ul li{ position:relative; padding:5px 0 5px 22px; font-size:14px; border-bottom:1px solid #F1F0F4; }
+  .mcol-text ul li:last-child{ border-bottom:none; }
+  .mcol-text ul li::before{ content:""; position:absolute; left:4px; top:13px; width:6px; height:6px; border-radius:50%; background:var(--fog); }
+  .mcol-text ul.good li::before{ background:var(--ok); }
+  .mcol-text ul.risk li::before{ background:var(--bad); }
+  .mcol-text ul.review li::before{ background:var(--purple); }
+  li b{ font-weight:600; }
+  .tag{ display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; padding:1px 7px; border-radius:5px; margin-right:7px; vertical-align:1px; }
+  .t-cfg{ background:var(--info-bg); color:var(--purple-deep); }
+  .t-touch{ background:#E2F0FB; color:#1A4877; }
+  .t-grade{ background:var(--bad-bg); color:var(--bad); }
+  .t-view{ background:var(--warn-bg); color:var(--warn); }
+
+  .mcol-demo{ position:sticky; top:20px; }
+  .demo-wrap{ border:1px solid var(--line); border-radius:18px; padding:14px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); }
+  .demo-cap{ font-size:11.5px; font-weight:600; color:var(--ink-soft); text-align:center; margin:2px 0 12px; }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:14px; margin:10px 0 0; font-size:12px; color:var(--ink-soft); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  footer{ margin-top:80px; padding-top:28px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-soft); }
+
+  @media (max-width:1000px){
+    .wrap{ padding:40px 22px 80px; }
+    .mrow{ grid-template-columns:1fr; gap:20px; }
+    .mcol-demo{ position:static; }
+    h1{ font-size:34px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover narrow">
+    <p class="eyebrow">Task Bank · разбор и живые примеры</p>
+    <h1>UX-разбор механик: соответствие возрасту и edge-кейсы</h1>
+    <p class="lede">Слева идёт покомпонентный разбор по реальному коду репозитория (UX, возраст, edge-кейсы). Справа стоит <b>живой пример самой механики</b> в оригинальной теме: можно поиграть и нажать «Проверить», чтобы увидеть реальный фидбек при переходе из Input в Graded.</p>
+    <div class="meta">
+      <span class="pill"><b>20</b> механик</span>
+      <span class="pill">Планшет <b>Lenovo Tab K11</b>, touch</span>
+      <span class="pill">Методология: <b>4 класс, 1 триместр</b></span>
+      <span class="pill">Фидбек: <b>бинарный</b></span>
+    </div>
+  </header>
+
+  <section class="narrow">
+    <h2>Контекст</h2>
+    <div class="h2sub">Что именно разбирается</div>
+    <div class="note info">
+      <span class="nt">Это разбор оригинальных компонентов репозитория</span>
+      <p>Наблюдения и примеры сняты с реального кода механик (<span class="mid">apps/task-bank</span> и <span class="mid">@math/core</span>, тема cream-paper), а <b>не</b> с витрины «Карамель-поп». Поэтому нет попыток-звёзд, конфетти, пружин и экранной клавиатуры. Демо справа воспроизводят оригинальное поведение.</p>
+    </div>
+    <div class="note info">
+      <span class="nt">Реальная модель фидбека (одна на все механики)</span>
+      <p>До «Проверить» никакого сигнала о правильности нет. После: верное зеленеет, неверное краснеет. <b>В коде</b> к цвету добавлены значки <span class="mid">Check</span> и <span class="mid">X</span>, <b>в макете</b> различение идёт только цветом, без значков. Правильный ответ <b>раскрывается</b> (гало, линия или луч), у наборных появляется «<b>нужно N</b>». Часть значений (часы, дробь-счётчик) видна <b>только в Graded</b>. Ввод идёт через нативные поля, выбор через Radix Select.</p>
+    </div>
+    <div class="note bad">
+      <span class="nt">Сквозная находка: бинарный грейдинг без частичного зачёта</span>
+      <p>Задание целиком либо верно, либо нет, и <b>частичного зачёта нет нигде</b>. Один промах из десяти проваливает весь экран; поклеточная подсветка показывает, что именно неверно, но зачёт идёт по принципу всё-или-ничего.</p>
+    </div>
+    <div class="note bad">
+      <span class="nt">Сквозная находка: hit-зоны ниже норматива 44px</span>
+      <p>CLAUDE.md проекта требует тап-цели ≥ 44px. По коду ниже: <b>часы</b> (≈32 и 28px), <b>угол</b> (≈28px), <b>координатная сетка</b> (≈34px). Для 9-летней моторики это источник промахов, а промах сразу стоит всего задания.</p>
+    </div>
+    <div class="note warn">
+      <span class="nt">Возраст: данные только по 4 классу, 1 триместр</span>
+      <p>Срез <span class="mid">data/methodology/skills.json</span> это 4 класс, т1: числа до 1 000 000, разряды и классы, округление, столбик, порядок действий, уравнения, периметр и площадь, делимость до 100. Часы, монеты, весы, ten-frame это младшие классы и в 4 классе работают как повторение.</p>
+    </div>
+  </section>
+
+  <section class="narrow">
+    <h2>Сводка</h2>
+    <div class="h2sub">Матрица рисков</div>
+    <div class="legend">
+      <span><i class="dot d-ok"></i>низкий риск</span>
+      <span><i class="dot d-warn"></i>есть нюансы</span>
+      <span><i class="dot d-bad"></i>высокий риск, требует решения</span>
+    </div>
+    <table id="matrix">
+      <thead><tr><th>Механика</th><th>Возраст, класс</th><th>Гл. UX-риск</th><th>Острый edge-кейс</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="narrow">
+    <h2>Соответствие методологии</h2>
+    <div class="h2sub">4 класс · триместр 1: где покрытие, где дыры</div>
+    <div class="block">
+      <div class="bt good">Прямое попадание в навыки 4 класса</div>
+      <ul class="good" style="list-style:none;padding:0;margin:0">
+        <li style="padding:5px 0 5px 22px;position:relative"><b>text-with-slots</b> закрывает уравнения, разрядные слагаемые, многошаговые ответы (g4-05, g4-36–48).</li>
+        <li style="padding:5px 0 5px 22px;position:relative"><b>choice</b> закрывает сравнение, делимость, округление, выбор формулы (g4-07, g4-29, g4-11, g4-43 и g4-44).</li>
+        <li style="padding:5px 0 5px 22px;position:relative"><b>column-add</b> закрывает сложение в столбик с переходом (g4-12). Только сложение, см. дыру ниже.</li>
+        <li style="padding:5px 0 5px 22px;position:relative"><b>sequence-track</b> · <b>drag-drop-set</b> · <b>match-columns</b> · <b>table-grid</b> · <b>array-grid</b> · <b>number-grid</b> · <b>slider-control</b> закрывают упорядочивание, классификация разрядов, сопоставление, таблицы, модель площади, делимость, прикидка (g4-09, 03, 30, 49, 21, 28, 34 и 35).</li>
+      </ul>
+    </div>
+    <div class="block">
+      <div class="bt risk">Дыры покрытия: методология требует, механики нет</div>
+      <ul class="risk" style="list-style:none;padding:0;margin:0">
+        <li style="padding:5px 0 5px 22px;position:relative"><span class="tag t-grade">критично</span><b>Нет столбика для вычитания, умножения и деления</b> (g4-15, g4-20, g4-24 и g4-25): column-add делает только сложение. Самый большой пробел.</li>
+        <li style="padding:5px 0 5px 22px;position:relative"><span class="tag t-cfg">важно</span><b>base10-blocks ограничен сотнями</b> (15 блоков на разряд, 0–999) против чисел до 1 000 000.</li>
+        <li style="padding:5px 0 5px 22px;position:relative"><span class="tag t-cfg">важно</span><b>«Восстанови цифру или найди ошибку в столбике»</b> (g4-14, g4-17) напрямую не закрываются.</li>
+        <li style="padding:5px 0 5px 22px;position:relative"><span class="tag t-view">нюанс</span><b>number-line ≤ 60 делений</b>: для чисел до 1 000 000 нужен крупный шаг и проверка «на глаз».</li>
+      </ul>
+    </div>
+    <p class="muted" style="margin-top:18px">Скорее для младших классов (повторение в 4): <b>clock, coins, balance-scale, ruler</b> (время, деньги, масса, измерение), <b>fraction-shade</b> (дроби и ten-frame), <b>coordinate-grid</b> (4–5 кл.), <b>bar-chart</b> (данные).</p>
+  </section>
+
+  <section>
+    <h2>Разбор по механикам</h2>
+    <div class="h2sub">20 механик · слева разбор, справа живой пример</div>
+    <div id="cards"></div>
+  </section>
+
+  <footer class="narrow">
+    <p>Источник: реальный код, репозиторий <span class="mid">AlgonovaTech/math</span>, каталог <span class="mid">apps/task-bank/components/mechanics/&lt;id&gt;</span> и <span class="mid">packages/core/src/mechanics</span>, методологический срез <span class="mid">data/methodology/skills.json</span> (4 класс, т1). Живые примеры справа это точные порты оригинальных компонентов (тема, поведение, грейдинг). Оценки рисков аналитические, требуют тестов с детьми.</p>
+  </footer>
+
+</div>
+
+<script src="mechx/vendor/react.production.min.js"></script>
+<script src="mechx/vendor/react-dom.production.min.js"></script>
+<script src="mechx/data.js"></script>
+<script src="mechx/kit.js"></script>
+<script src="mechx/mech_basic.js"></script>
+<script src="mechx/mech_build.js"></script>
+<script src="mechx/mech_move.js"></script>
+<script src="mechx/mech_fill.js"></script>
+<script src="mechx/mech_naset.js"></script>
+<script src="mechx/app.js"></script>
+</body>
+</html>
