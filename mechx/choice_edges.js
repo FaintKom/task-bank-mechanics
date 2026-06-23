@@ -450,31 +450,6 @@ function EmptyCorrectDemo() {
   }, "= \u043D\u0435\u0432\u0435\u0440\u043D\u043E"))));
 }
 
-/* ── EC4 · мульти без подсказки о количестве ── */
-function HintDemo() {
-  const options = ["3", "8", "5", "6", "11", "4"];
-  const correct = [1, 3, 5];
-  const [withHint, setWithHint] = useState(false);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "ec-controls"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "seg"
-  }, /*#__PURE__*/React.createElement("button", {
-    className: !withHint ? "on" : "",
-    onClick: () => setWithHint(false)
-  }, "\u0411\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438"), /*#__PURE__*/React.createElement("button", {
-    className: withHint ? "on" : "",
-    onClick: () => setWithHint(true)
-  }, "\u0421 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u043E\u0439"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(ChoiceWidget, {
-    key: withHint ? "h" : "n",
-    options: options,
-    correct: correct,
-    prompt: withHint ? "Выбери все чётные, их 3" : "Какие числа чётные?"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "demo-note"
-  }, withHint ? "Количество названо в вопросе, ребёнок знает, что искать несколько." : "Сколько выбрать? Кнопки выглядят как одиночный выбор, легко отметить одно и провалить."));
-}
-
 /* стилизованная рука (силуэт) для демонстрации перекрытия экрана */
 function HandSilhouette() {
   return /*#__PURE__*/React.createElement("svg", {
@@ -668,13 +643,6 @@ const CASES = [{
   Demo: EmptyCorrectDemo,
   problem: "Если верных вариантов нет (correct_indices = []), единственный «правильный» ответ это не выбрать ничего. Но «Проверить» заблокирована на пустом значении, а любой выбор грейдится неверным. Задание невозможно сдать.",
   fix: "Запрещать пустой correct_indices на уровне валидации конфига, либо разрешать подтверждать пустой ответ явной кнопкой «ничего не подходит»."
-}, {
-  tag: "t-grade",
-  tagText: "Грейдинг",
-  title: "Мульти без подсказки о количестве",
-  Demo: HintDemo,
-  problem: "Кнопки одиночного и множественного выбора выглядят одинаково. Без подсказки ребёнок отмечает один вариант и проваливает задание: частичного зачёта нет, 1 из 3 засчитывается как полностью неверно.",
-  fix: "Всегда называть количество или «выбери все…» в тексте вопроса: множественный выбор не должен угадываться."
 }, {
   tag: "t-tab",
   tagText: "Планшет · эргономика",
