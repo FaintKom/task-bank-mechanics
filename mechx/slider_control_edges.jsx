@@ -79,7 +79,7 @@ function UnderThumbDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации</button>
         </div>
       </div>
       <TabletFrame><Slider key={fix ? "f" : "n"} min={0} max={20} step={1} target={13} bigValue={fix} showValue={!fix} prompt="Поставь ползунок на" /></TabletFrame>

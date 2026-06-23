@@ -85,7 +85,7 @@ function SwapDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (подсказка)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (подсказка)</button>
         </div>
       </div>
       <TabletFrame><SequenceTrack key={fix ? "f" : "n"} items={["12", "34", "56", "78"]} hintSwap={fix} /></TabletFrame>

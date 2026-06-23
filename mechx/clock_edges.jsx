@@ -76,7 +76,7 @@ function HitAreaDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть (~28px)</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (≥44px)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (≥44px)</button>
         </div>
       </div>
       <TabletFrame><Clock key={fix ? "f" : "n"} targetHour={3} targetMinute={40} hitR={fix ? 24 : 14} liveReadout /></TabletFrame>
@@ -95,7 +95,7 @@ function ReadoutDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (живое табло)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (живое табло)</button>
         </div>
       </div>
       <TabletFrame><Clock key={fix ? "f" : "n"} targetHour={7} targetMinute={15} hitR={22} liveReadout={fix} /></TabletFrame>

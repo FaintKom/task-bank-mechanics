@@ -436,7 +436,7 @@ function CrossingDemo() {
       setM(solve(SIX));
       setGraded(false);
     }
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0446\u0432\u0435\u0442\u0430)")), !fix && /*#__PURE__*/React.createElement("button", {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0446\u0432\u0435\u0442\u0430)")), !fix && /*#__PURE__*/React.createElement("button", {
     className: "btn primary",
     onClick: () => {
       setM(solve(SIX));
@@ -517,7 +517,7 @@ function UnconnectedDemo() {
       setM({});
       setGraded(false);
     }
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E")), !fix && /*#__PURE__*/React.createElement("button", {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438")), !fix && /*#__PURE__*/React.createElement("button", {
     className: "btn primary",
     onClick: () => {
       setM({

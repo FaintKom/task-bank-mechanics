@@ -168,7 +168,7 @@ function EmptySlotDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации</button>
         </div>
         {!fix && <button className="btn primary" onClick={() => { setValue(["12", ""]); setGraded(true); }}>Заполнить только первое и проверить</button>}
         {!fix && <button className="btn" onClick={() => { setValue(["", ""]); setGraded(false); }}>Сбросить</button>}

@@ -87,7 +87,7 @@ function LowerDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть (тап)</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (тянуть верх)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (тянуть верх)</button>
         </div>
         <span className="mech-label" style={{ fontSize: 13 }}>Подними столбик, потом попробуй понизить</span>
       </div>

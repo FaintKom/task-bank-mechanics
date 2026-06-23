@@ -77,7 +77,7 @@ function CarryDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (строка переносов)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (строка переносов)</button>
         </div>
       </div>
       <TabletFrame><ColumnAdd key={fix ? "f" : "n"} a={27} b={45} carryRow={fix} /></TabletFrame>
@@ -94,7 +94,7 @@ function AutoAdvanceDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!adv ? "on" : ""} onClick={() => setAdv(false)}>Как есть</button>
-          <button className={adv ? "on" : ""} onClick={() => setAdv(true)}>Как надо (авто-переход)</button>
+          <button className={adv ? "on" : ""} onClick={() => setAdv(true)}>рекомендации (авто-переход)</button>
         </div>
       </div>
       <TabletFrame><ColumnAdd key={adv ? "a" : "n"} a={348} b={276} autoAdvance={adv} /></TabletFrame>

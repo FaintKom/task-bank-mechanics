@@ -267,7 +267,7 @@ function CarryDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0441\u0442\u0440\u043E\u043A\u0430 \u043F\u0435\u0440\u0435\u043D\u043E\u0441\u043E\u0432)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(ColumnAdd, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0441\u0442\u0440\u043E\u043A\u0430 \u043F\u0435\u0440\u0435\u043D\u043E\u0441\u043E\u0432)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(ColumnAdd, {
     key: fix ? "f" : "n",
     a: 27,
     b: 45,
@@ -290,7 +290,7 @@ function AutoAdvanceDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: adv ? "on" : "",
     onClick: () => setAdv(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0430\u0432\u0442\u043E-\u043F\u0435\u0440\u0435\u0445\u043E\u0434)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(ColumnAdd, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0430\u0432\u0442\u043E-\u043F\u0435\u0440\u0435\u0445\u043E\u0434)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(ColumnAdd, {
     key: adv ? "a" : "n",
     a: 348,
     b: 276,

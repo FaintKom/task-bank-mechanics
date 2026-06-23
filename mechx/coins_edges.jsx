@@ -81,7 +81,7 @@ function LiveColorDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (живой цвет)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (живой цвет)</button>
         </div>
         <span className="mech-label" style={{ fontSize: 13 }}>Набери больше 18</span>
       </div>
@@ -120,7 +120,7 @@ function RemoveDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (тап по монете)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (тап по монете)</button>
         </div>
       </div>
       <TabletFrame><Coins key={fix ? "f" : "n"} target={18} coins={[1, 2, 5, 10]} tapRemove={fix} liveColor={fix} /></TabletFrame>

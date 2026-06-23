@@ -104,7 +104,7 @@ function TiltDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (разница числом)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (разница числом)</button>
         </div>
         <span className="mech-label" style={{ fontSize: 13 }}>Добавь чуть меньше или чуть больше нормы</span>
       </div>
@@ -124,7 +124,7 @@ function RemoveDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (тап по гире)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (тап по гире)</button>
         </div>
       </div>
       <TabletFrame><BalanceScale key={fix ? "f" : "n"} leftGrams={40} weights={[1, 2, 5, 10]} tapRemove={fix} showDelta={fix} /></TabletFrame>

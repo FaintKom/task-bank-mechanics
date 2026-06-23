@@ -209,7 +209,7 @@ function UnderThumbDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Slider, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Slider, {
     key: fix ? "f" : "n",
     min: 0,
     max: 20,

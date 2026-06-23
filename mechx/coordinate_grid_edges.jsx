@@ -76,7 +76,7 @@ function OrderDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (подсказка осей)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (подсказка осей)</button>
         </div>
         <span className="mech-label" style={{ fontSize: 13 }}>Цель (4; 1), легко перепутать с (1; 4)</span>
       </div>

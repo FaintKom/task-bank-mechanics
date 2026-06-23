@@ -132,7 +132,7 @@ function AutoAdvanceDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!adv ? "on" : ""} onClick={() => setAdv(false)}>Как есть</button>
-          <button className={adv ? "on" : ""} onClick={() => setAdv(true)}>Как надо (авто-переход)</button>
+          <button className={adv ? "on" : ""} onClick={() => setAdv(true)}>рекомендации (авто-переход)</button>
         </div>
       </div>
       <TabletFrame><TableGrid key={adv ? "a" : "n"} autoAdvance={adv} config={manyBlanks()} /></TabletFrame>

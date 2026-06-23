@@ -66,7 +66,7 @@ function CounterDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (живой счётчик)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (живой счётчик)</button>
         </div>
       </div>
       <TabletFrame><FractionShade key={fix ? "f" : "n"} denominator={6} targetFilled={4} liveCounter={fix} /></TabletFrame>

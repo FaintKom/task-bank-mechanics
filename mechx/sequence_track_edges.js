@@ -227,7 +227,7 @@ function SwapDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(SequenceTrack, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(SequenceTrack, {
     key: fix ? "f" : "n",
     items: ["12", "34", "56", "78"],
     hintSwap: fix

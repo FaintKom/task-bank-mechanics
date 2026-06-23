@@ -259,7 +259,7 @@ function HitAreaDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C (~28px)"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u226544px)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Clock, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u226544px)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Clock, {
     key: fix ? "f" : "n",
     targetHour: 3,
     targetMinute: 40,
@@ -283,7 +283,7 @@ function ReadoutDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0436\u0438\u0432\u043E\u0435 \u0442\u0430\u0431\u043B\u043E)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Clock, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0436\u0438\u0432\u043E\u0435 \u0442\u0430\u0431\u043B\u043E)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Clock, {
     key: fix ? "f" : "n",
     targetHour: 7,
     targetMinute: 15,

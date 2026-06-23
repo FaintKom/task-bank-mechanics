@@ -122,7 +122,7 @@ function CrossingDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => { setFix(false); setM({}); setGraded(false); }}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => { setFix(true); setM(solve(SIX)); setGraded(false); }}>Как надо (цвета)</button>
+          <button className={fix ? "on" : ""} onClick={() => { setFix(true); setM(solve(SIX)); setGraded(false); }}>рекомендации (цвета)</button>
         </div>
         {!fix && <button className="btn primary" onClick={() => { setM(solve(SIX)); setGraded(false); }}>Соединить все верно</button>}
         {!fix && <button className="btn" onClick={() => { setM({}); setGraded(false); }}>Сбросить</button>}
@@ -159,7 +159,7 @@ function UnconnectedDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => { setFix(false); setM({}); setGraded(false); }}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => { setFix(true); setM({}); setGraded(false); }}>Как надо</button>
+          <button className={fix ? "on" : ""} onClick={() => { setFix(true); setM({}); setGraded(false); }}>рекомендации</button>
         </div>
         {!fix && <button className="btn primary" onClick={() => { setM({ 0: 0, 1: 1 }); setGraded(true); }}>Соединить только две и проверить</button>}
       </div>

@@ -325,7 +325,7 @@ function TiltDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0440\u0430\u0437\u043D\u0438\u0446\u0430 \u0447\u0438\u0441\u043B\u043E\u043C)")), /*#__PURE__*/React.createElement("span", {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0440\u0430\u0437\u043D\u0438\u0446\u0430 \u0447\u0438\u0441\u043B\u043E\u043C)")), /*#__PURE__*/React.createElement("span", {
     className: "mech-label",
     style: {
       fontSize: 13
@@ -353,7 +353,7 @@ function RemoveDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0442\u0430\u043F \u043F\u043E \u0433\u0438\u0440\u0435)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(BalanceScale, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0442\u0430\u043F \u043F\u043E \u0433\u0438\u0440\u0435)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(BalanceScale, {
     key: fix ? "f" : "n",
     leftGrams: 40,
     weights: [1, 2, 5, 10],

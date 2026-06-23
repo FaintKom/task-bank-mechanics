@@ -311,7 +311,7 @@ function UnplacedDemo() {
       setPlaced({});
       setGraded(false);
     }
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E")), !fix && /*#__PURE__*/React.createElement("button", {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438")), !fix && /*#__PURE__*/React.createElement("button", {
     className: "btn primary",
     onClick: () => {
       setPlaced({
@@ -348,7 +348,7 @@ function UnderFingerDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0442\u044C)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(DragDropSet, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0442\u044C)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(DragDropSet, {
     key: fix ? "f" : "n",
     config: EVEN_ODD,
     growSelected: fix

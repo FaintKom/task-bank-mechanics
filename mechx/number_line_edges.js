@@ -326,7 +326,7 @@ function FingerTipSkin() {
   })));
 }
 
-/* «Как надо»: тянешь по горизонтали где угодно, над точкой — лупа с числом */
+/* «рекомендации»: тянешь по горизонтали где угодно, над точкой — лупа с числом */
 function DragAxis({
   from,
   to,
@@ -520,7 +520,7 @@ function FingerConfirmDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u041A\u0430\u043A \u043D\u0430\u0434\u043E (\u043B\u0443\u043F\u0430 \u0438 \u0442\u044F\u043D\u0438)"))), fix ? /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(DragAxis, {
+  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u043B\u0443\u043F\u0430 \u0438 \u0442\u044F\u043D\u0438)"))), fix ? /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(DragAxis, {
     from: 0,
     to: 10,
     step: 1,

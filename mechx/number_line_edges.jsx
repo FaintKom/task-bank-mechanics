@@ -107,7 +107,7 @@ function FingerTipSkin() {
   );
 }
 
-/* «Как надо»: тянешь по горизонтали где угодно, над точкой — лупа с числом */
+/* «рекомендации»: тянешь по горизонтали где угодно, над точкой — лупа с числом */
 function DragAxis({ from, to, step, target }) {
   const [val, setVal] = useState(null);
   const [down, setDown] = useState(false);
@@ -157,7 +157,7 @@ function FingerConfirmDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (лупа и тяни)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (лупа и тяни)</button>
         </div>
       </div>
       {fix

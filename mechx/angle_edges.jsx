@@ -100,7 +100,7 @@ function DragDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть (тап)</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (крутить луч)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (крутить луч)</button>
         </div>
       </div>
       <TabletFrame><Angle key={fix ? "f" : "n"} target={75} step={5} drag={fix} readout hitR={fix ? 22 : 14} /></TabletFrame>

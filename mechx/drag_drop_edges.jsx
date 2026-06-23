@@ -91,7 +91,7 @@ function UnplacedDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => { setFix(false); setPlaced({}); setGraded(false); }}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => { setFix(true); setPlaced({}); setGraded(false); }}>Как надо</button>
+          <button className={fix ? "on" : ""} onClick={() => { setFix(true); setPlaced({}); setGraded(false); }}>рекомендации</button>
         </div>
         {!fix && <button className="btn primary" onClick={() => { setPlaced({ 0: "Чётные", 1: "Нечётные" }); setGraded(true); }}>Разложить только две и проверить</button>}
       </div>
@@ -111,7 +111,7 @@ function UnderFingerDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (увеличивать)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (увеличивать)</button>
         </div>
       </div>
       <TabletFrame><DragDropSet key={fix ? "f" : "n"} config={EVEN_ODD} growSelected={fix} /></TabletFrame>

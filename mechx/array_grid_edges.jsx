@@ -67,7 +67,7 @@ function CommutativeDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (a×b = b×a)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (a×b = b×a)</button>
         </div>
         <span className="mech-label" style={{ fontSize: 13 }}>Построй 4×3 при цели 3×4 и проверь</span>
       </div>

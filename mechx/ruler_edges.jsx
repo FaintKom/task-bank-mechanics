@@ -116,7 +116,7 @@ function ConfirmDemo() {
       <div className="ec-controls">
         <div className="seg">
           <button className={!fix ? "on" : ""} onClick={() => setFix(false)}>Как есть</button>
-          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>Как надо (крупное число)</button>
+          <button className={fix ? "on" : ""} onClick={() => setFix(true)}>рекомендации (крупное число)</button>
         </div>
       </div>
       <TabletFrame><Ruler key={fix ? "f" : "n"} length={8} max={15} hitW={fix ? 48 : 40} readout={fix} /></TabletFrame>
