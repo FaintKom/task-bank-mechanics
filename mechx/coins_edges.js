@@ -98,14 +98,15 @@ function PlusMinus({
 }
 
 /* ── виджет (порт): монеты-номиналы, +/− набирают количество ──
-   liveColor — пилюля суммы краснеет при переборе по ходу; tapRemove — тап по монете убирает её */
+   liveColor — пилюля суммы краснеет при переборе по ходу; tapRemove — тап по монете убирает её; showRunningTotal: false скрывает сумму до проверки (для сложного уровня) */
 function Coins({
   target,
   coins,
   unit = "₽",
   liveColor,
   tapRemove,
-  maxEach = 20
+  maxEach = 20,
+  showRunningTotal = true
 }) {
   const [counts, setCounts] = useState(coins.map(() => 0));
   const [graded, setGraded] = useState(false);
@@ -198,7 +199,7 @@ function Coins({
       borderRadius: 999,
       padding: "4px 16px"
     }
-  }, total, " ", unit)), /*#__PURE__*/React.createElement("button", {
+  }, showRunningTotal || graded ? total + " " + unit : "?")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "mech-check",
     disabled: total === 0 || graded,
@@ -223,8 +224,8 @@ function Example() {
   }));
 }
 
-/* ── EC1 · сумма не краснеет при переборе по ходу ── */
-function LiveColorDemo() {
+/* ── EC1 · сумма видна на лёгком, скрыта на сложном ── */
+function SumVisibilityDemo() {
   const [fix, setFix] = useState(false);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "ec-controls"
@@ -233,22 +234,22 @@ function LiveColorDemo() {
   }, /*#__PURE__*/React.createElement("button", {
     className: !fix ? "on" : "",
     onClick: () => setFix(false)
-  }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
+  }, "\u043B\u0451\u0433\u043A\u0438\u0439: \u0441\u0443\u043C\u043C\u0430 \u0432\u0438\u0434\u043D\u0430"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0436\u0438\u0432\u043E\u0439 \u0446\u0432\u0435\u0442)")), /*#__PURE__*/React.createElement("span", {
+  }, "\u0441\u043B\u043E\u0436\u043D\u044B\u0439: \u0441\u0443\u043C\u043C\u0430 \u0441\u043A\u0440\u044B\u0442\u0430")), /*#__PURE__*/React.createElement("span", {
     className: "mech-label",
     style: {
       fontSize: 13
     }
-  }, "\u041D\u0430\u0431\u0435\u0440\u0438 \u0431\u043E\u043B\u044C\u0448\u0435 18")), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Coins, {
+  }, "\u041D\u0430\u0431\u0435\u0440\u0438 \u043C\u043E\u043D\u0435\u0442\u044B \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C")), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Coins, {
     key: fix ? "f" : "n",
     target: 18,
     coins: [1, 2, 5, 10],
-    liveColor: fix
+    showRunningTotal: !fix
   })), /*#__PURE__*/React.createElement("div", {
     className: "demo-note"
-  }, fix ? "Пилюля суммы краснеет, как только перебрал цель, и ребёнок сразу видит, что пора убрать монету." : "Сумма-пилюля не меняет цвет при переборе по ходу: ребёнок узнаёт, что собрал лишнее, только после «Проверить»."));
+  }, fix ? "Сложный уровень: сумма скрыта до «Проверить» (флаг showRunningTotal=false), чтобы по ходу она не выдавала перебор. После проверки сумма и результат раскрываются." : "Начальный уровень: сумма видна по ходу как подсказка, ребёнок сам следит, хватает ли. Цветовой оценки до «Проверить» нет: верность показывается только после неё."));
 }
 
 /* ── EC2 · target недостижим номиналами ── */
@@ -287,7 +288,7 @@ function RemoveDemo() {
   }, "\u041A\u0430\u043A \u0435\u0441\u0442\u044C"), /*#__PURE__*/React.createElement("button", {
     className: fix ? "on" : "",
     onClick: () => setFix(true)
-  }, "\u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0438\u0438 (\u0442\u0430\u043F \u043F\u043E \u043C\u043E\u043D\u0435\u0442\u0435)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Coins, {
+  }, "\u0442\u0430\u043F \u043F\u043E \u043C\u043E\u043D\u0435\u0442\u0435 (\u043D\u0430 \u0416\u0435\u043D\u044E)"))), /*#__PURE__*/React.createElement(TabletFrame, null, /*#__PURE__*/React.createElement(Coins, {
     key: fix ? "f" : "n",
     target: 18,
     coins: [1, 2, 5, 10],
@@ -295,15 +296,15 @@ function RemoveDemo() {
     liveColor: fix
   })), /*#__PURE__*/React.createElement("div", {
     className: "demo-note"
-  }, fix ? "Лишнюю монету можно убрать тапом прямо по ней, это прямее и понятнее ребёнку, чем искать кнопку «−»." : "Убрать монету можно только кнопкой «−» под номиналом; тап по самой монете ничего не делает. Плюс автоповтора при удержании нет, поэтому большую сумму набирать долго."));
+  }, fix ? "Так работал бы тап по монете для удаления. Автоповтор удержанием берём точно, жест тапа отдали Жене как владельцу UX." : "Убрать монету можно только кнопкой «−» под номиналом; тап по самой монете ничего не делает. Плюс автоповтора при удержании нет, поэтому большую сумму набирать долго."));
 }
 const CASES = [{
   tag: "t-age",
   tagText: "Возраст · фидбек",
-  title: "Перебор не виден до проверки (предложение)",
-  Demo: LiveColorDemo,
-  problem: "Сумма-пилюля не меняет цвет, пока ребёнок набирает монеты. Что он перебрал цель, выяснится только после «Проверить», а по ходу набора нет сигнала «уже слишком много», хотя сумма считается живо.",
-  fix: "Доработать: подкрашивать сумму по ходу, зелёным при точном совпадении, красным при переборе, нейтрально пока меньше цели. Можно дать это как включаемый режим подсказки, а не всегда."
+  title: "Сумма по ходу: переключатель сложности (видна на лёгком, скрыта на сложном)",
+  Demo: SumVisibilityDemo,
+  problem: "Текущая сумма видна всегда и её нельзя скрыть. Для начального уровня это удобная подсказка, но дальше нужны задания, где сумма не видна до «Проверить», иначе она выдаёт перебор сама.",
+  fix: "Решение: делаем переключателем сложности (Julia, Mario). На начальном уровне сумма видна как подсказка, на сложном скрывается до «Проверить» (флаг showRunningTotal, по умолчанию видна). Цвет по ходу (зелёный/красный) не берём: до «Проверить» ответ не оцениваем (Maksim). Если цветовой индикатор всё же нужен, его вид решает Женя."
 }, {
   tag: "t-cfg",
   tagText: "Задание · конфиг",
@@ -314,10 +315,10 @@ const CASES = [{
 }, {
   tag: "t-touch",
   tagText: "Планшет · касание",
-  title: "Убрать монету только кнопкой «−» (предложение)",
+  title: "Управление монетами: автоповтор берём, тап по монете на Женю",
   Demo: RemoveDemo,
   problem: "Лишняя монета убирается только кнопкой «−» под номиналом, тап по самой монете ничего не делает, хотя это интуитивный жест. Плюс +/− без автоповтора: большую сумму набирать приходится десятками отдельных тапов.",
-  fix: "Доработать: убирать монету тапом по ней; добавить автоповтор при удержании кнопок +/− или ввод количества, чтобы набор крупных сумм не был утомительным."
+  fix: "Решение: автоповтор при удержании кнопок +/- берём (Julia: удобно и интуитивно). Удаление тапом по монете отдаём Жене как владельцу UX."
 }];
 function Cases() {
   return /*#__PURE__*/React.createElement(React.Fragment, null, CASES.map((c, i) => {
