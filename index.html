@@ -23,12 +23,16 @@
   .pill b{ color:var(--ink); }
 
   .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:20px; }
-  .card{ display:block; text-decoration:none; color:inherit; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); padding:22px 22px 20px; transition:transform .18s cubic-bezier(.22,.61,.36,1), box-shadow .18s, border-color .18s; }
+  .card{ display:block; text-decoration:none; color:inherit; overflow:hidden; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 8px 24px rgba(16,24,40,.05); padding:22px 22px 20px; transition:transform .18s cubic-bezier(.22,.61,.36,1), box-shadow .18s, border-color .18s; }
   .card:hover{ transform:translateY(-4px); box-shadow:0 16px 36px rgba(16,24,40,.12); border-color:var(--purple); }
-  .card-top{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
-  .thumb{ width:56px; height:56px; border-radius:14px; background:#F4F1FE; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .num{ font-size:13px; font-weight:700; color:var(--purple); font-variant-numeric:tabular-nums; }
-  .card h3{ font-size:19px; font-weight:700; letter-spacing:-0.02em; margin:0 0 4px; }
+  .card-shot{ margin:-22px -22px 16px; height:150px; background:#F4F1FE; border-bottom:1px solid var(--line); position:relative; }
+  .card-shot img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+  .card-shot.noimg{ display:flex; align-items:center; justify-content:center; }
+  .shot-badge{ position:absolute; top:10px; left:10px; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:3px 8px; border-radius:999px; background:rgba(255,255,255,.92); color:var(--purple); box-shadow:0 1px 4px rgba(16,24,40,.12); }
+  .shot-badge.soon{ background:var(--warn-bg); color:var(--warn); }
+  .card-top{ display:flex; align-items:center; gap:12px; margin-bottom:0; }
+  .num{ font-size:12px; font-weight:700; color:var(--purple); font-variant-numeric:tabular-nums; background:#F4F1FE; border-radius:8px; padding:5px 9px; flex-shrink:0; }
+  .card h3{ font-size:19px; font-weight:700; letter-spacing:-0.02em; margin:0 0 3px; }
   .card .id{ font-family:"SFMono-Regular",Consolas,monospace; font-size:12px; color:var(--fog); }
   .card .foot{ display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); }
   .count{ font-size:13px; font-weight:600; color:var(--ink-soft); }
@@ -69,21 +73,23 @@
 <body>
 <div class="wrap">
   <header class="cover">
-    <p class="eyebrow">Task Bank · разбор механик</p>
-    <h1>Механики: edge-кейсы и что доработать</h1>
-    <p class="lede">Покомпонентный разбор интерактивных механик по реальному коду репозитория. Каждый граничный случай это живая демонстрация на симуляторе планшета (Lenovo Tab K11, 1280×800) с предложением, что улучшить. Нажмите карточку, чтобы открыть полную страницу.</p>
+    <p class="eyebrow">Task Bank · библиотека механик</p>
+    <h1>Библиотека механик: эталон, спецификация, edge-кейсы</h1>
+    <p class="lede">Единый источник истины по 20 интерактивным механикам. Каждая страница это эталон-дизайн (макет Figma либо рабочий пример как эталон), описание и спецификация, живая демонстрация на симуляторе планшета (Lenovo Tab K11, 1280×800) и edge-кейсы с предложениями. Нажмите карточку, чтобы открыть полную страницу.</p>
     <div class="meta">
-      <span class="pill"><b>20</b> механик · все разобраны</span>
+      <span class="pill"><b>20</b> механик</span>
+      <span class="pill"><b>13</b> с макетом Figma · <b>7</b> эталон по коду</span>
       <span class="pill">Устройство: планшет, touch</span>
     </div>
   </header>
 
   <div class="grid" id="grid"></div>
 
-  <footer>Все 20 механик разобраны. Каждая страница: рабочий пример, edge-кейсы на симуляторе планшета и статус по макету (сверка наших замечаний с Figma и PDF).</footer>
+  <footer>Все 20 механик разобраны. Каждая страница: эталон-дизайн (макет Figma или рабочий пример как эталон), описание и спецификация, рабочий пример и edge-кейсы на симуляторе планшета. Это источник истины для будущих работ.</footer>
 </div>
 
 <script src="mechx/data.js"></script>
+<script src="mechx/library.js"></script>
 <script>
 const MECHS = [
   { n:"01", id:"choice", name:"Выбор ответа", file:"Механика 01 - Выбор ответа.html", edges:6, svg:'<rect x="10" y="12" width="36" height="9" rx="3"/><rect x="10" y="24" width="36" height="9" rx="3" opacity="0.85"/><rect x="10" y="36" width="22" height="9" rx="3" opacity="0.55"/>' },
@@ -112,11 +118,15 @@ const plural = (n) => { const a = n % 10, b = n % 100; if (a === 1 && b !== 11) 
 MECHS.forEach((m) => {
   const a = document.createElement("a");
   a.className = "card"; a.href = m.file;
+  const fig = (window.LIBRARY && window.LIBRARY[m.id] && window.LIBRARY[m.id].fig) || null;
+  const shot = fig
+    ? `<div class="card-shot"><span class="shot-badge">Макет Figma</span><img loading="lazy" src="assets/previews/${m.id}/${fig}" alt="Макет: ${m.name}"></div>`
+    : `<div class="card-shot noimg"><span class="shot-badge soon">Эталон код</span><svg width="64" height="64" viewBox="0 0 56 56" fill="var(--purple)">${m.svg}</svg></div>`;
   a.innerHTML =
+    shot+
     `<div class="card-top">`+
-      `<div class="thumb"><svg width="56" height="56" viewBox="0 0 56 56" fill="var(--purple)">${m.svg}</svg></div>`+
-      `<div><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="num">${m.n}</span></div>`+
-      `<h3>${m.name}</h3><span class="id">${m.id}</span></div>`+
+      `<span class="num">${m.n}</span>`+
+      `<div><h3>${m.name}</h3><span class="id">${m.id}</span></div>`+
     `</div>`+
     `<div class="foot"><span class="count">${m.edges} ${plural(m.edges)}</span><span class="open">Открыть →</span></div>`;
   grid.appendChild(a);
